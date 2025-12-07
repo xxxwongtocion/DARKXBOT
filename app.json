@@ -1,0 +1,20 @@
+{
+  "name": "DARKX-BOT",
+  "description": "Simple WhatsApp Bot that auto-views status and reacts ❤️",
+  "repository": "https://github.com/xxxwongtocion/DARKXBOT",
+  "stack": "heroku-24",
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "scripts": {
+    "postdeploy": "node index.js"
+  },
+  "env": {
+    "NODE_ENV": {
+      "description": "Node environment",
+      "value": "production"
+    }
+  }
+}
