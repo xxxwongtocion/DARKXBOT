@@ -1,21 +1,20 @@
-import makeWASocket, { useSingleFileAuthState, fetchLatestBaileysVersion } from '@whiskeysockets/baileys'
-import P from 'pino'
-import fs from 'fs'
-import qrcode from 'qrcode-terminal'
+const { default: makeWASocket, fetchLatestBaileysVersion, useSingleFileAuthState } = require('@whiskeysockets/baileys')
+const P = require('pino')
+const qrcode = require('qrcode-terminal')
 
-// Use a single auth file
+// use auth file
 const { state, saveState } = useSingleFileAuthState('./auth_info.json')
 
 async function start() {
   const { version } = await fetchLatestBaileysVersion()
-  
+
   const sock = makeWASocket({
     version,
     logger: P({ level: 'silent' }),
     auth: state
   })
 
-  sock.ev.on('creds.update', saveState) // save credentials automatically
+  sock.ev.on('creds.update', saveState)
 
   sock.ev.on('connection.update', (update) => {
     const { connection, qr } = update
